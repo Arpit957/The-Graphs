@@ -1,0 +1,86 @@
+class Solution {
+    
+    bool cycle(int node, vector<bool>&visited, vector<bool>&dfsvisited, vector<int>adj[]){
+       visited[node]=true;
+       dfsvisited[node]=true;
+       
+       for(auto i: adj[node]){
+           if(!visited[i]){
+               if(cycle(i,visited,dfsvisited,adj))
+               return true;
+           }
+           else if(dfsvisited[i]==true)
+           return true;
+       }
+       dfsvisited[node]=false;
+       return false;
+   }
+    /*
+ bool cycleBFS(int source, unordered_map<int,bool>& visited, vector<int>adj[]){
+        
+        unordered_map<int,int>parent;
+        
+       parent[source] = -1;
+        visited[source] = true;
+        queue<int>q;
+        q.push(source);
+        
+        
+        while(!q.empty()){
+            
+            int frontnode = q.front();
+            q.pop();
+            
+            for(auto neighbour:adj[frontnode]){
+                
+                if(visited[neighbour]==true && neighbour != parent[frontnode]){
+                    return true;
+                }
+                else if(!visited[neighbour]){
+                    q.push(neighbour);
+                    visited[neighbour] = true;
+                    parent[neighbour] = frontnode;
+                }
+            }
+        }
+        return false;
+        
+    }
+    */
+  public:
+    // Function to detect cycle in a directed graph.
+   // /*
+    bool isCyclic(int V, vector<int> adj[]) {
+        // code here
+        
+        /*
+        //create adjancney list
+        unordered_map<int,bool> visited;
+        for(int i =0;i<V;i++){
+            
+            if(!visited[i]){
+                
+                 if(cycleBFS(i,visited,adj))
+               return true;
+            }
+            
+        }
+        return false;
+    }
+    
+    */
+    
+         vector<bool>visited(V,false);
+       
+       vector<bool>dfsvisited(V,false);
+       
+       for(int i=0 ;i<V; i++){
+           if(!visited[i]){
+               if(cycle(i,visited,dfsvisited,adj))
+               return true;
+           }
+       }
+       return false;
+       
+   }
+};
