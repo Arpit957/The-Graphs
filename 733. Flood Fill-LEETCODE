@@ -1,0 +1,21 @@
+class Solution {
+     void dfs(int i,int j, vector<vector<int>>& image, int newColor, int initialColor){
+        // handle edge case first
+        int n = image.size();
+        int m = image[0].size();
+        if(i<0 || j<0 || i>=n || j>=m) return;
+        if(image[i][j] != initialColor) return;
+        // after entering the node colour it
+        image[i][j] = newColor;   
+        dfs(i-1,j,image,newColor,initialColor);
+        dfs(i+1, j,image,newColor,initialColor);
+        dfs(i,j-1,image,newColor,initialColor);
+        dfs(i,j+1,image,newColor,initialColor);
+    }
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int initialColor = image[sr][sc];
+        if(initialColor != color) dfs(sr,sc,image, color, initialColor);
+        return image;
+    }
+};
