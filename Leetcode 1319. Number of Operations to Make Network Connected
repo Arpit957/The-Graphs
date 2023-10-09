@@ -1,0 +1,42 @@
+class Solution {
+   int findparent(vector<int> &parent, int i){
+        if(parent[i]==i) return i;
+        return parent[i] = findparent(parent, parent[i]);
+    }  
+    int unite(int n1,int n2,vector<int>&parent,vector<int>&rank){      
+        int pn1 = findparent(parent,n1);
+        int pn2 = findparent(parent,n2);
+        
+        if(pn2==pn1)return 0;
+        else{
+        if(rank[pn1]<rank[pn2]){
+            parent[pn1] = pn2;
+            rank[pn2]+=rank[pn1];
+        }
+        else{
+            parent[pn2] = pn1;
+            rank[pn1]+=rank[pn2];
+        }
+        }
+        return 1;    
+    }   
+public:
+    int makeConnected(int n, vector<vector<int>>& connections) {  
+        int ans =0;      
+        int m = n;
+        //initilize the parents by themsleves        
+        vector<int>parent(n+1);      
+        for(int i=0;i<n;i++){
+          parent[i]=i;
+        }      
+        vector<int>rank(n,1);
+        for(int i=0;i<connections.size();i++){           
+            int u = connections[i][0];
+            int v = connections[i][1];
+         m-= unite(u,v,parent,rank);
+        }
+            if(connections.size()<n-1)return -1;
+            else
+          return m-1;       
+    }
+};
