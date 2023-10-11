@@ -1,0 +1,54 @@
+// User function Template for C++
+
+class Solution{
+        vector<int> topoSort(int v,vector<int>adj[]) {
+        //int i;
+        //, n=adj.size();
+        vector<int> ans, indegree(v, 0);
+        queue<int> q;
+        for(int i=0;i<v;i++) {
+            for(auto x: adj[i]) {
+                indegree[x]++;
+            }
+        }
+        for(int i=0;i<v;i++) if(indegree[i]==0) q.push(i);
+        while(q.size()) {
+            int u=q.front(); q.pop();
+            ans.push_back(u);
+            for(auto x: adj[u]) {
+                indegree[x]--;
+                if(indegree[x]==0) q.push(x);
+            }
+        }
+        return ans;
+    }
+    
+    public:
+    string findOrder(string dict[], int N, int K) {
+        //code here
+        
+        vector<int>adj[K];
+        for(int i =0;i<N-1;i++){
+            string first = dict[i];
+            string second = dict[i+1];
+            
+            int len = min(first.size(),second.size());
+            
+            for(int ptr = 0;ptr<len;ptr++){
+                if(first[ptr] != second[ptr]){
+                    adj[first[ptr] -'a'].push_back(second[ptr] -'a');
+                    break;
+                }
+            }
+        }
+        
+        vector<int> topo = topoSort(K,adj);
+        
+        string ans = "";
+        
+        for(auto i:topo){
+            ans+=char(i + 'a');
+        }
+        return ans;
+    }
+};
