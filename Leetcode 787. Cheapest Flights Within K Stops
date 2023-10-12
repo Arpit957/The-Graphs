@@ -1,0 +1,31 @@
+class Solution {
+public:
+   int findCheapestPrice(int n,vector<vector<int>>& flights,int src,int dst,int k) {
+       //simple dijkstra with BFS 
+       int size  = flights.size();   
+       vector<vector<pair<int,int> > >ans(n,vector<pair<int,int>>{});    
+       for(int i =0;i<size;i++){       
+ans[flights[i][0]].push_back(make_pair(flights[i][1],flights[i][2]));      
+       }
+       queue<vector<int> >q;
+       vector<int> distance(n, INT32_MAX);
+       distance[src] =0;
+       q.push({src,0,0});
+       while(!q.empty()){
+       vector<int> temp = q.front();
+           q.pop();   
+           int node1 = temp[0];
+           int dist = temp[1];
+           int step = temp[2];       
+           for(auto nbr: ans[node1]){       
+               if(dist + nbr.second < distance[nbr.first] && step <= k){
+                   distance[nbr.first] = dist + nbr.second;      
+                   q.push({nbr.first,distance[nbr.first],step+1});
+               }    
+           }           
+       }
+       if (distance[dst] == INT32_MAX)
+            return -1;
+        return distance[dst];
+    }
+};
