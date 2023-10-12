@@ -1,0 +1,61 @@
+class Solution
+{
+	public:
+	//Function to find sum of weights of edges of the Minimum Spanning Tree.
+    int spanningTree(int V, vector<vector<int>> adj[])
+    {
+        // code here
+        
+        //given adj list
+        
+        vector<int> key(V,INT_MAX);
+        
+        vector<bool>mst(V,false);
+        
+        //required to make minimum spanning tree
+        //vector<int> parent(V,-1);
+        
+        key[1] = 0;
+        
+        for(int i =0;i<V;i++){
+            
+            int mini = INT_MAX;
+            int node;
+            
+            for(int j =0;j<V;j++){
+                if(mst[j]==false and key[j]<mini){
+                    mini = key[j];
+                    node = j;
+                }
+            }
+            
+            
+            //mark minimum node as true
+            mst[node]=true;
+            
+            //check for adjacent nodes
+            for(auto neighb:adj[node]){
+                int nnode = neighb[0];
+                int weight = neighb[1];
+                
+                
+                if(mst[nnode]==false and key[nnode]>weight){
+                    key[nnode]=weight;
+                    
+                    //parent[neighb] = node;
+                }
+            }
+            
+            
+        }
+        
+        
+        int sum =0;
+        
+        for(auto it: key){
+            sum+=it;
+        }
+        return sum;
+        
+    }
+};
