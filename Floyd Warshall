@@ -1,0 +1,47 @@
+//User function template for C++
+
+class Solution {
+  public:
+	void shortest_distance(vector<vector<int>>&matrix){
+	    // Code here
+	    int given_rows = matrix.size();
+	    int given_cols = matrix[0].size();
+	    
+	    
+	    for(int row = 0;row<given_rows;row++){
+	        for(int col = 0;col<given_cols;col++){
+	            if(matrix[row][col] == -1){
+	                matrix[row][col] = 1e7;
+	            }
+	            if(row==col)matrix[row][col] = 0;
+	        }
+	    }
+	    
+	    for(int via_route = 0;via_route<given_cols;via_route++){
+	        for(int i =0;i<given_rows;i++){
+	            for(int j = 0;j<given_cols;j++){
+	                matrix[i][j] = min(  matrix[i][j],
+	                matrix[i][via_route] + matrix[via_route][j]  );
+	            }
+	        }
+	    }
+	    
+	    //to check negative cycle
+	   // for(int i =0;i<n;i++){
+	   //     for(int j = 0;j<n;j++){
+	   //         if(matrix[i][j] < 0)
+	   //     }
+	   // }
+	    
+	    
+	    
+	    for(int row = 0;row<given_rows;row++){
+	        for(int col = 0;col<given_cols;col++){
+	            if(matrix[row][col] == 1e7){
+	                matrix[row][col] = -1;
+	            }
+	            //if(i==j)matrix[row][col] = 0;
+	        }
+	    }
+	}
+};
