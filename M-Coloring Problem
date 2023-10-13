@@ -1,0 +1,31 @@
+class Solution{
+public:
+bool issafe(bool adj[101][101],int i,int color,int n,vector<int>&vis){
+    for(int j = 0;j<n;j++){
+        if(i != j and vis[j]==color and adj[i][j])return false;
+    }
+    return true;
+}
+int dfs(bool adj[101][101],int n,vector<int>&vis,int m,int i){
+    if(i == n)return true;
+    
+    for(int c  = 1;c <= m;c++){
+        vis[i] = c;
+        if(issafe(adj,i,c,n,vis)){
+            if(dfs(adj,n,vis,m,i+1))return true;
+        }
+    }
+    vis[i] = 0;
+    return false;
+}
+    // Function to determine if graph can be coloured with at most M colours such
+    // that no two adjacent vertices of graph are coloured with same colour.
+    bool graphColoring(bool graph[101][101], int m, int n) {
+        // your code here
+        //int edges = graph.size();
+         
+        vector<int>vis(n,0);
+        
+        return dfs(graph,n,vis,m,0);
+    }
+};
