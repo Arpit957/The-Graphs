@@ -1,0 +1,33 @@
+class Solution {
+    
+    bool dfs(int node,int color[],int curr_color,vector<int>adj[]){
+        color[node] = curr_color;
+        
+        for(auto neighbour: adj[node]){
+            if(color[neighbour] == -1){
+                if(dfs(neighbour,color,!curr_color,adj) == false) return false;
+            }
+            else if(color[neighbour]==curr_color)return false;
+        }
+        return true;
+    }
+    
+public:
+	bool isBipartite(int V, vector<int>adj[]){
+	    // Code here
+	    
+	    int color[V];
+	    //int curr_color;
+	    
+	    for(int i=0;i<V;i++)color[i] = -1;
+	    
+	    for(int i =0;i<V;i++){
+	        if(color[i] == -1){
+	            if(dfs(i,color,0,adj)==false)return false;
+	        }
+	    }
+	    
+	    return true;
+	}
+
+};
